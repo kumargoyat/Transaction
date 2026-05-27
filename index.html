@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #f4f3ef;
       --card: #ffffff;
@@ -21,28 +20,29 @@
       --radius: 10px;
       --radius-sm: 6px;
     }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
       padding: 2.5rem 1rem;
       color: var(--text);
     }
-
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    /* ---- FORM CARD ---- */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
       width: 100%;
-      max-width: 560px;
       padding: 2rem 2rem 1.75rem;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-
     .card-header {
       display: flex;
       align-items: center;
@@ -51,26 +51,19 @@
       padding-bottom: 1.25rem;
       border-bottom: 1px solid var(--border);
     }
-
     .icon-wrap {
       width: 38px; height: 38px;
       background: var(--accent-light);
       border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
     }
-
     .icon-wrap svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
     h1 { font-size: 17px; font-weight: 600; color: var(--text); }
     .subtitle { font-size: 12px; color: var(--muted); margin-top: 1px; }
-
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .full { grid-column: 1 / -1; }
-
     .field { display: flex; flex-direction: column; gap: 5px; }
-
     label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.02em; text-transform: uppercase; }
-
     input, select, textarea {
       width: 100%;
       font-family: 'DM Sans', sans-serif;
@@ -83,132 +76,241 @@
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-
     input:focus, select:focus, textarea:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
       background: #fff;
     }
-
     select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7870' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
-
     textarea { resize: vertical; min-height: 80px; }
-
-    .divider { border: none; border-top: 1px solid var(--border); grid-column: 1 / -1; margin: 4px 0; }
-
     .type-pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .type-pill { padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); font-size: 13px; cursor: pointer; background: #fafaf8; color: var(--muted); transition: all 0.15s; user-select: none; }
     .type-pill:hover { border-color: #b0b0a8; color: var(--text); }
-    .type-pill.active[data-type="debit"]   { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
-    .type-pill.active[data-type="credit"]  { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
-    .type-pill.active[data-type="transfer"]{ background: #eef3fb; border-color: #3a6bbf; color: #3a6bbf; }
-    .type-pill.active[data-type="refund"]  { background: #fef6e4; border-color: #c88b14; color: #c88b14; }
-
+    .type-pill.active[data-type="debit"]    { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+    .type-pill.active[data-type="credit"]   { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .type-pill.active[data-type="transfer"] { background: #eef3fb; border-color: #3a6bbf; color: #3a6bbf; }
+    .type-pill.active[data-type="refund"]   { background: #fef6e4; border-color: #c88b14; color: #c88b14; }
     .actions { display: flex; gap: 10px; margin-top: 1.5rem; }
     .btn { flex: 1; padding: 10px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; border-radius: var(--radius-sm); cursor: pointer; border: 1px solid var(--border); background: #fafaf8; color: var(--muted); transition: all 0.15s; }
     .btn:hover { background: #f0efeb; color: var(--text); }
     .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); flex: 2; }
     .btn.primary:hover { background: #245c43; }
-
     .toast { display: none; align-items: center; gap: 8px; margin-top: 1rem; padding: 10px 14px; background: var(--accent-light); border: 1px solid #b7d9c8; border-radius: var(--radius-sm); color: var(--accent); font-size: 14px; }
     .toast svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2.5; flex-shrink: 0; }
 
-    @media (max-width: 480px) {
+    /* ---- TABLE SECTION ---- */
+    .table-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-title { font-size: 16px; font-weight: 600; color: var(--text); }
+    .row-count { font-size: 12px; color: var(--muted); background: #f0efeb; border-radius: 99px; padding: 3px 10px; }
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead tr {
+      background: #f7f6f2;
+    }
+    th {
+      text-align: left;
+      padding: 9px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0efeb;
+      color: var(--text);
+      vertical-align: middle;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #fafaf8; }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    .badge-debit    { background: var(--danger-light); color: var(--danger); }
+    .badge-credit   { background: var(--accent-light); color: var(--accent); }
+    .badge-transfer { background: #eef3fb; color: #3a6bbf; }
+    .badge-refund   { background: #fef6e4; color: #c88b14; }
+    .amount-debit   { color: var(--danger); font-weight: 500; }
+    .amount-credit  { color: var(--accent); font-weight: 500; }
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .delete-btn:hover { color: var(--danger); }
+
+    @media (max-width: 600px) {
       .grid { grid-template-columns: 1fr; }
       .full { grid-column: 1; }
-      .card { padding: 1.5rem 1.25rem; }
+      .card, .table-section { padding: 1.25rem; }
     }
   </style>
 </head>
 <body>
-<div class="card">
-  <div class="card-header">
-    <div class="icon-wrap">
-      <svg viewBox="0 0 24 24"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M14 4l-4 16"/></svg>
-    </div>
-    <div>
-      <h1>New Transaction</h1>
-      <div class="subtitle">Record a financial transaction</div>
-    </div>
-  </div>
+<div class="page-wrap">
 
-  <div class="grid">
-    <div class="field full">
-      <label>Transaction type</label>
-      <div class="type-pills">
-        <div class="type-pill" data-type="debit" onclick="selectType(this)">Debit</div>
-        <div class="type-pill" data-type="credit" onclick="selectType(this)">Credit</div>
-        <div class="type-pill" data-type="transfer" onclick="selectType(this)">Transfer</div>
-        <div class="type-pill" data-type="refund" onclick="selectType(this)">Refund</div>
+  <!-- FORM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M14 4l-4 16"/></svg>
       </div>
-      <input type="hidden" id="t-type">
+      <div>
+        <h1>New Transaction</h1>
+        <div class="subtitle">Fill in details and click Save — it appears in the table below</div>
+      </div>
     </div>
 
-    <div class="field">
-      <label for="t-date">Date</label>
-      <input type="date" id="t-date">
+    <div class="grid">
+      <div class="field full">
+        <label>Transaction type</label>
+        <div class="type-pills">
+          <div class="type-pill" data-type="debit"    onclick="selectType(this)">Debit</div>
+          <div class="type-pill" data-type="credit"   onclick="selectType(this)">Credit</div>
+          <div class="type-pill" data-type="transfer" onclick="selectType(this)">Transfer</div>
+          <div class="type-pill" data-type="refund"   onclick="selectType(this)">Refund</div>
+        </div>
+        <input type="hidden" id="t-type">
+      </div>
+
+      <div class="field">
+        <label for="t-date">Date</label>
+        <input type="date" id="t-date">
+      </div>
+
+      <div class="field">
+        <label for="t-amount">Amount ($)</label>
+        <input type="number" id="t-amount" placeholder="0.00" min="0" step="0.01">
+      </div>
+
+      <div class="field full">
+        <label for="t-desc">Description</label>
+        <input type="text" id="t-desc" placeholder="e.g. Monthly rent payment">
+      </div>
+
+      <div class="field">
+        <label for="t-cat">Category</label>
+        <select id="t-cat">
+          <option value="">Select category</option>
+          <option>Housing</option>
+          <option>Food & dining</option>
+          <option>Transportation</option>
+          <option>Utilities</option>
+          <option>Healthcare</option>
+          <option>Entertainment</option>
+          <option>Shopping</option>
+          <option>Income</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="t-account">Account</label>
+        <input type="text" id="t-account" placeholder="e.g. Checking #1234">
+      </div>
+
+      <div class="field">
+        <label for="t-ref">Reference #</label>
+        <input type="text" id="t-ref" placeholder="Optional">
+      </div>
+
+      <div class="field">
+        <label for="t-payee">Payee / Payer</label>
+        <input type="text" id="t-payee" placeholder="Optional">
+      </div>
+
+      <div class="field full">
+        <label for="t-notes">Notes</label>
+        <textarea id="t-notes" placeholder="Any additional details..."></textarea>
+      </div>
     </div>
 
-    <div class="field">
-      <label for="t-amount">Amount ($)</label>
-      <input type="number" id="t-amount" placeholder="0.00" min="0" step="0.01">
+    <div class="actions">
+      <button class="btn" onclick="resetForm()">Clear</button>
+      <button class="btn primary" onclick="submitForm()">Save Transaction</button>
     </div>
 
-    <div class="field full">
-      <label for="t-desc">Description</label>
-      <input type="text" id="t-desc" placeholder="e.g. Monthly rent payment">
-    </div>
-
-    <div class="field">
-      <label for="t-cat">Category</label>
-      <select id="t-cat">
-        <option value="">Select category</option>
-        <option>Housing</option>
-        <option>Food & dining</option>
-        <option>Transportation</option>
-        <option>Utilities</option>
-        <option>Healthcare</option>
-        <option>Entertainment</option>
-        <option>Shopping</option>
-        <option>Income</option>
-        <option>Other</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="t-account">Account</label>
-      <input type="text" id="t-account" placeholder="e.g. Checking #1234">
-    </div>
-
-    <div class="field">
-      <label for="t-ref">Reference #</label>
-      <input type="text" id="t-ref" placeholder="Optional">
-    </div>
-
-    <div class="field">
-      <label for="t-payee">Payee / Payer</label>
-      <input type="text" id="t-payee" placeholder="Optional">
-    </div>
-
-    <div class="field full">
-      <label for="t-notes">Notes</label>
-      <textarea id="t-notes" placeholder="Any additional details..."></textarea>
+    <div class="toast" id="toast">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      Transaction saved to Account Management!
     </div>
   </div>
 
-  <div class="actions">
-    <button class="btn" onclick="resetForm()">Clear</button>
-    <button class="btn primary" onclick="submitForm()">Save Transaction</button>
+  <!-- TABLE -->
+  <div class="table-section">
+    <div class="table-header">
+      <span class="table-title">Account Management</span>
+      <span class="row-count" id="row-count">0 records</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Account</th>
+            <th>Reference</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tx-tbody">
+          <tr id="empty-row">
+            <td colspan="9">
+              <div class="empty-state">No transactions yet — fill the form above and click Save</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="toast" id="toast">
-    <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-    Transaction saved successfully!
-  </div>
-</div>
+</div><!-- end page-wrap -->
 
 <script>
   document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
+
+  var transactions = [];
 
   function selectType(el) {
     document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
@@ -217,7 +319,7 @@
   }
 
   function resetForm() {
-    ['t-desc','t-amount','t-account','t-ref','t-payee','t-notes'].forEach(id => document.getElementById(id).value = '');
+    ['t-desc','t-amount','t-account','t-ref','t-payee','t-notes'].forEach(function(id){ document.getElementById(id).value = ''; });
     document.getElementById('t-cat').value = '';
     document.getElementById('t-type').value = '';
     document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
@@ -226,16 +328,66 @@
   }
 
   function submitForm() {
-    const type = document.getElementById('t-type').value;
-    const amount = document.getElementById('t-amount').value;
-    const desc = document.getElementById('t-desc').value.trim();
+    var type   = document.getElementById('t-type').value;
+    var amount = document.getElementById('t-amount').value;
+    var desc   = document.getElementById('t-desc').value.trim();
     if (!type || !amount || !desc) {
       alert('Please fill in: transaction type, amount, and description.');
       return;
     }
-    const toast = document.getElementById('toast');
+    var tx = {
+      date:        document.getElementById('t-date').value,
+      type:        type,
+      amount:      parseFloat(amount).toFixed(2),
+      description: desc,
+      category:    document.getElementById('t-cat').value,
+      account:     document.getElementById('t-account').value.trim(),
+      reference:   document.getElementById('t-ref').value.trim(),
+      notes:       document.getElementById('t-notes').value.trim()
+    };
+    transactions.unshift(tx);
+    renderTable();
+    var toast = document.getElementById('toast');
     toast.style.display = 'flex';
-    setTimeout(() => toast.style.display = 'none', 3500);
+    setTimeout(function(){ toast.style.display = 'none'; }, 3500);
+    resetForm();
+  }
+
+  function deleteRow(idx) {
+    transactions.splice(idx, 1);
+    renderTable();
+  }
+
+  function renderTable() {
+    var tbody = document.getElementById('tx-tbody');
+    var count = document.getElementById('row-count');
+    count.textContent = transactions.length + (transactions.length === 1 ? ' record' : ' records');
+    if (transactions.length === 0) {
+      tbody.innerHTML = '<tr id="empty-row"><td colspan="9"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>';
+      return;
+    }
+    var html = '';
+    transactions.forEach(function(tx, i) {
+      var amtClass = tx.type === 'credit' ? 'amount-credit' : (tx.type === 'debit' ? 'amount-debit' : '');
+      var amtPrefix = tx.type === 'credit' ? '+' : (tx.type === 'debit' ? '-' : '');
+      html += '<tr>';
+      html += '<td>' + (tx.date || '—') + '</td>';
+      html += '<td><span class="badge badge-' + tx.type + '">' + tx.type + '</span></td>';
+      html += '<td class="' + amtClass + '">' + amtPrefix + '$' + tx.amount + '</td>';
+      html += '<td>' + escHtml(tx.description) + '</td>';
+      html += '<td>' + (tx.category || '—') + '</td>';
+      html += '<td>' + (escHtml(tx.account) || '—') + '</td>';
+      html += '<td>' + (escHtml(tx.reference) || '—') + '</td>';
+      html += '<td>' + (escHtml(tx.notes) || '—') + '</td>';
+      html += '<td><button class="delete-btn" onclick="deleteRow(' + i + ')" title="Delete">✕</button></td>';
+      html += '</tr>';
+    });
+    tbody.innerHTML = html;
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 </script>
 </body>
