@@ -113,25 +113,6 @@
         <input type="text" id="t-desc" placeholder="e.g. Monthly rent payment">
       </div>
       <div class="field">
-        <label for="t-cat">Category</label>
-        <select id="t-cat">
-          <option value="">Select category</option>
-          <option>Housing</option>
-          <option>Food & dining</option>
-          <option>Transportation</option>
-          <option>Utilities</option>
-          <option>Healthcare</option>
-          <option>Entertainment</option>
-          <option>Shopping</option>
-          <option>Income</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="t-account">Account</label>
-        <input type="text" id="t-account" placeholder="e.g. Checking #1234">
-      </div>
-      <div class="field">
         <label for="t-ref">Reference #</label>
         <input type="text" id="t-ref" placeholder="Optional">
       </div>
@@ -167,11 +148,11 @@
         <thead>
           <tr>
             <th>Date</th><th>Type</th><th>Amount</th><th>Description</th>
-            <th>Category</th><th>Account</th><th>Reference</th><th>Notes</th><th></th>
+            <th>Reference</th><th>Notes</th><th></th>
           </tr>
         </thead>
         <tbody id="tx-tbody">
-          <tr><td colspan="9"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>
+          <tr><td colspan="7"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>
         </tbody>
       </table>
     </div>
@@ -193,10 +174,9 @@
   }
 
   function resetForm() {
-    ['t-desc','t-amount','t-account','t-ref','t-payee','t-notes'].forEach(function(id){
+    ['t-desc','t-amount','t-ref','t-payee','t-notes'].forEach(function(id){
       document.getElementById(id).value = '';
     });
-    document.getElementById('t-cat').value = '';
     document.getElementById('t-type').value = '';
     document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
     document.querySelectorAll('.type-pill').forEach(function(p){ p.classList.remove('active'); });
@@ -225,8 +205,6 @@
       type:        type,
       amount:      parseFloat(amount).toFixed(2),
       description: desc,
-      category:    document.getElementById('t-cat').value,
-      account:     document.getElementById('t-account').value.trim(),
       reference:   document.getElementById('t-ref').value.trim(),
       notes:       document.getElementById('t-notes').value.trim()
     };
@@ -241,8 +219,6 @@
       type:        tx.type,
       amount:      tx.amount,
       description: tx.description,
-      category:    tx.category,
-      account:     tx.account,
       reference:   tx.reference,
       notes:       tx.notes
     });
@@ -282,7 +258,7 @@
     var count = document.getElementById('row-count');
     count.textContent = transactions.length + (transactions.length === 1 ? ' record' : ' records');
     if (transactions.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>';
       return;
     }
     var html = '';
@@ -294,8 +270,6 @@
       html += '<td><span class="badge badge-' + tx.type + '">' + tx.type + '</span></td>';
       html += '<td class="' + amtClass + '">' + amtPrefix + '$' + tx.amount + '</td>';
       html += '<td>' + esc(tx.description) + '</td>';
-      html += '<td>' + (tx.category || '—') + '</td>';
-      html += '<td>' + (esc(tx.account) || '—') + '</td>';
       html += '<td>' + (esc(tx.reference) || '—') + '</td>';
       html += '<td>' + (esc(tx.notes) || '—') + '</td>';
       html += '<td><button class="delete-btn" onclick="deleteRow(' + i + ')" title="Delete">✕</button></td>';
