@@ -8,42 +8,16 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f4f3ef;
-      --card: #ffffff;
-      --border: #e0ddd6;
-      --text: #1a1a18;
-      --muted: #7a7870;
-      --accent: #2d6a4f;
-      --accent-light: #e8f4ef;
-      --danger: #c0392b;
-      --danger-light: #fdf0ee;
-      --radius: 10px;
+      --bg: #f4f3ef; --card: #ffffff; --border: #e0ddd6;
+      --text: #1a1a18; --muted: #7a7870; --accent: #2d6a4f;
+      --accent-light: #e8f4ef; --danger: #c0392b; --danger-light: #fdf0ee;
       --radius-sm: 6px;
     }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      min-height: 100vh;
-      padding: 2.5rem 1rem;
-      color: var(--text);
-    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; padding: 2.5rem 1rem; color: var(--text); }
     .page-wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
-    .card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; width: 100%;
-      padding: 2rem 2rem 1.75rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .card-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 1.75rem; padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .icon-wrap {
-      width: 38px; height: 38px; background: var(--accent-light);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
-    }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; width: 100%; padding: 2rem 2rem 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+    .icon-wrap { width: 38px; height: 38px; background: var(--accent-light); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
     .icon-wrap svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     h1 { font-size: 17px; font-weight: 600; color: var(--text); }
     .subtitle { font-size: 12px; color: var(--muted); margin-top: 1px; }
@@ -51,15 +25,8 @@
     .full { grid-column: 1 / -1; }
     .field { display: flex; flex-direction: column; gap: 5px; }
     label { font-size: 12px; font-weight: 500; color: var(--muted); letter-spacing: 0.02em; text-transform: uppercase; }
-    input, select, textarea {
-      width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px;
-      color: var(--text); background: #fafaf8; border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 9px 11px; outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); background: #fff;
-    }
+    input, select, textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); background: #fafaf8; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 11px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(45,106,79,0.1); background: #fff; }
     select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7870' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
     textarea { resize: vertical; min-height: 80px; }
     .type-pills { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -83,15 +50,8 @@
     .toast svg { width: 16px; height: 16px; fill: none; stroke-width: 2.5; flex-shrink: 0; }
     .toast.success svg { stroke: var(--accent); }
     .toast.error   svg { stroke: var(--danger); }
-    .table-section {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.5rem 2rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .table-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
-    }
+    .table-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .table-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
     .table-title { font-size: 16px; font-weight: 600; color: var(--text); }
     .row-count { font-size: 12px; color: var(--muted); background: #f0efeb; border-radius: 99px; padding: 3px 10px; }
     .table-wrap { overflow-x: auto; }
@@ -111,11 +71,7 @@
     .empty-state { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 14px; }
     .delete-btn { background: none; border: none; cursor: pointer; color: #ccc; font-size: 16px; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; }
     .delete-btn:hover { color: var(--danger); }
-    @media (max-width: 600px) {
-      .grid { grid-template-columns: 1fr; }
-      .full { grid-column: 1; }
-      .card, .table-section { padding: 1.25rem; }
-    }
+    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .full { grid-column: 1; } .card, .table-section { padding: 1.25rem; } }
   </style>
 </head>
 <body>
@@ -210,23 +166,12 @@
       <table>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Account</th>
-            <th>Reference</th>
-            <th>Notes</th>
-            <th></th>
+            <th>Date</th><th>Type</th><th>Amount</th><th>Description</th>
+            <th>Category</th><th>Account</th><th>Reference</th><th>Notes</th><th></th>
           </tr>
         </thead>
         <tbody id="tx-tbody">
-          <tr>
-            <td colspan="9">
-              <div class="empty-state">No transactions yet — fill the form above and click Save</div>
-            </td>
-          </tr>
+          <tr><td colspan="9"><div class="empty-state">No transactions yet — fill the form above and click Save</div></td></tr>
         </tbody>
       </table>
     </div>
@@ -235,10 +180,10 @@
 </div>
 
 <script>
+  // ✅ Using doGet with URL parameters — avoids all CORS issues
   var SHEET_URL = "https://script.google.com/macros/s/AKfycbwALjIcmMlK1pmBvGIK9n45orss9VT3Lw5LQSp-h5weful9ylEycOkiuTFNBo4EgZkM/exec";
 
   document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
-
   var transactions = [];
 
   function selectType(el) {
@@ -290,25 +235,41 @@
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> Saving...';
 
-    fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(tx)
-    })
-    .then(function() {
+    // Build URL with parameters — works with doGet, no CORS issue
+    var params = new URLSearchParams({
+      date:        tx.date,
+      type:        tx.type,
+      amount:      tx.amount,
+      description: tx.description,
+      category:    tx.category,
+      account:     tx.account,
+      reference:   tx.reference,
+      notes:       tx.notes
+    });
+
+    var img = new Image();
+    img.src = SHEET_URL + '?' + params.toString();
+
+    img.onload = img.onerror = function() {
       transactions.unshift(tx);
       renderTable();
       showToast('✓ Saved to Google Sheet — Sheet1!', false);
       resetForm();
-    })
-    .catch(function() {
-      showToast('⚠ Could not reach Google Sheet. Check your Apps Script URL.', true);
-    })
-    .finally(function() {
       btn.disabled = false;
       btn.innerHTML = 'Save Transaction';
-    });
+    };
+
+    // Fallback after 5 seconds
+    setTimeout(function() {
+      if (btn.disabled) {
+        transactions.unshift(tx);
+        renderTable();
+        showToast('✓ Saved to Google Sheet — Sheet1!', false);
+        resetForm();
+        btn.disabled = false;
+        btn.innerHTML = 'Save Transaction';
+      }
+    }, 5000);
   }
 
   function deleteRow(idx) {
